@@ -1,37 +1,57 @@
 import http from 'http';
 import fs from 'fs'
 import url from 'url'
+import path from 'path';
 
 const hostname = "localhost";
 const port = 2080;
 
+const formTag = `
+<form method="POST" action="/post">
+<input type="text" name="id">
+<input type="submit" name="submit" value= "제출">
+</form>
+`;
+
+function htmlPage(data) {
+
+  return `
+  <!DOCTYPE html>
+  <html>
+  <head>
+  <title>Node.js</title>
+  </head>
+  <body>
+  <h1>로그인</h1>
+  ${data}
+  </body>
+  </html>`
+}
+
 const server = http.createServer(function (req, res) {
 
 
-
-  // let body = "";
-  // body += "<!DOCTYPE html>";
-  // body += "<html>";
-  // body += "<head>";
-  // body += "<title>Node.js</title>";
-  // body += "</head>";
-  // body += "<body>";
-  // body += "<h1>Hello World</h1>";
-  // body += "</body>";
-  // body += "</html>";
+  let _url = req.url;
+  // let pathname = url.parse(_url, true).pathname;
 
 
+  if (req.method === 'GET' && _url === '/') {
 
-  if(req.method === 'GET'){
-    
-      res.statusCode = 200;
-      res.setHeader('Content-Type', 'text/plain')
-      res.end('Hellow World');
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/html', 'charset=UTF-8')
+    let page = htmlPage(formTag);
+    res.write(page);
+    res.end();
 
   }
-  res.writeHead(404);
-  res.end('Not Found Page!');
+  if (req.method === 'POST' && _url === '/post') {
 
+  }
+
+  else {
+    res.writeHead(404);
+    res.end('Not Found Page!');
+  }
 })
 
 server.listen(port, hostname, (error) => {
@@ -39,6 +59,6 @@ server.listen(port, hostname, (error) => {
 
 
   if (error) {
-    console.error("server not working")
+    console.error("server is not working");
   }
 })
