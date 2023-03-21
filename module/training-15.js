@@ -8,15 +8,19 @@ function splitString(stringParams) {
   return result;
 }
 
-
+//문자열 붙이는 기능 함수
 function appendString(stringArray, callback) {
   let body = "";
   stringArray.forEach(function (element) {
     body = body + element;
   });
+  //callback(body)는 body를 인자로 전달하여 호출됨.
+  //처리된 결과를 콜백함수를 통해 외부로 전달하기 위함.
   callback(body)
 };
 
+
+//본론은 여기. 여기서 함수가 호출돼서 본격적으로 쓰임.
 let bodyTemplate = ``;
 let resultCase = appendString(splitString(stringExample), function (body) {
   console.log(body);

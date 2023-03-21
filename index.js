@@ -3,6 +3,7 @@ import fs from 'fs'
 import url from 'url'
 import path from 'path';
 
+
 const hostname = "localhost";
 const port = 2080;
 
@@ -37,8 +38,7 @@ const server = http.createServer(function (req, res) {
 
   if (req.method === 'GET' && _url === '/') {
 
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/html', 'charset=UTF-8')
+    res.writeHead(200, { 'Content-Type': 'text/html; charset=UTF-8'})
     let page = htmlPage(formTag);
     res.write(page);
     res.end();
